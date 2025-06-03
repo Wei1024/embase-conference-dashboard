@@ -6,9 +6,15 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Get credentials from environment variables
-AUTH_USERNAME = os.getenv('AUTH_USERNAME', 'admin')
-AUTH_PASSWORD = os.getenv('AUTH_PASSWORD', 'admin123')
+# Get credentials from environment variables or Streamlit secrets
+if hasattr(st, 'secrets'):
+    # Running on Streamlit Cloud
+    AUTH_USERNAME = st.secrets.get('AUTH_USERNAME', 'admin')
+    AUTH_PASSWORD = st.secrets.get('AUTH_PASSWORD', 'admin123')
+else:
+    # Running locally
+    AUTH_USERNAME = os.getenv('AUTH_USERNAME', 'admin')
+    AUTH_PASSWORD = os.getenv('AUTH_PASSWORD', 'admin123')
 
 def hash_password(password):
     """Hash a password using SHA256"""
