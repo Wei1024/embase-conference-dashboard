@@ -5,12 +5,16 @@ from datetime import datetime
 import requests
 from fuzzywuzzy import fuzz
 import json
+from auth import check_authentication, show_user_info
 
 st.set_page_config(
     page_title="Embase Conference Dashboard",
     page_icon="📊",
     layout="wide"
 )
+
+# Check authentication
+check_authentication()
 
 # File paths
 EXCEL_FILE = "conference_list.xlsx"
@@ -137,6 +141,9 @@ df = load_conference_data()
 
 # Sidebar for refresh and filters
 with st.sidebar:
+    # Show user info and logout button
+    show_user_info()
+    
     st.header("🔍 Search & Filters")
     
     # Search filters
